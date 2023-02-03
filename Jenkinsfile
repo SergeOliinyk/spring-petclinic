@@ -4,9 +4,9 @@ pipeline {
            PATH = "/usr/share/maven/apache-maven-3.8.7/bin/:$PATH"
         }
         tools {
-            maven 'maven_3_8_7'
+            maven "maven-3.8.7"
         }
-    }
+    
     stages { 
       stage('Clone repository') {
             steps {
@@ -21,4 +21,5 @@ pipeline {
             }
         }
     }
+}
 
