@@ -1,6 +1,9 @@
 pipeline {
-    agent any {
-        tools{
+    agent any 
+        environment {
+           PATH = "/usr/share/maven/apache-maven-3.8.7/bin/:$PATH"
+        }
+        tools {
             maven 'maven_3_8_7'
         }
     }
@@ -14,8 +17,8 @@ pipeline {
         stage ('Build docker image') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'mykey_from-jenkins', url: 'git@github.com:SergeOliinyk/spring-petclinic.git']])
-                sh './mvn spring-boot:build-image'
+                sh 'mvn spring-boot:build-image'
             }
         }
     }
-}
+
