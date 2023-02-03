@@ -7,7 +7,7 @@ pipeline {
             maven 'maven_3_8_7'
         }
     }
-    stages {  
+    stages { 
       stage('Clone repository') {
             steps {
                 url: 'git@github.com:SergeOliinyk/spring-petclinic.git'
