@@ -3,7 +3,7 @@ pipeline {
     tools{
         maven "3.8.7"
     }
-}
+
 
     stages {
         stege('Clone repository') {
@@ -29,9 +29,7 @@ pipeline {
     post {
         always {
             cleanWs()
+            }
         }
     }
-
-
-
 }
