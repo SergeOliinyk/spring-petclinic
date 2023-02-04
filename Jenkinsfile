@@ -13,7 +13,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh "mvn -version"
                 sh "mvn spring-boot:build-image"
             }
         }
