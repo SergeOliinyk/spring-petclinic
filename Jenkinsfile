@@ -11,8 +11,8 @@ pipeline {
                 git branch: 'main'
     }
         stage('Build Maven Docker image') {
-            steps{
-                script{
+            steps {
+                script {
                     sh "mvn -version"
                     echo "-Building Docker image-"
                     sh "mvn spring-boot:build-image"
