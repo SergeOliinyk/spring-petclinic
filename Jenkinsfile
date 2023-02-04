@@ -7,9 +7,11 @@ pipeline {
 
     stages {
         stege('Clone repository') {
-            url: 'https://github.com/SergeOliinyk/spring-petclinic.git'
+            steps {
+                url: 'https://github.com/SergeOliinyk/spring-petclinic.git'
                 git branch: 'main'
-    }
+            }
+        }
         stage('Build Maven Docker image') {
             steps {
                 script {
