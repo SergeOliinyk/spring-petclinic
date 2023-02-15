@@ -1,0 +1,24 @@
+pipeline {
+    agent { label 'master'}
+    options {
+        timestamps()
+    }
+    stages {
+        stage ("Get container definition") {
+            steps {
+                sh ("aws ecs describe-task-definition --task-definition Final-Project --query 'taskDefinition.{containerDefinitions:containerDefinitions}' > task-definitions.json "); 
+            }
+        }
+        stage ("Create task definition") {
+            steps {
+                sh '''cat task-definitions.json | jq --arg IMAGE "203299885394.dkr.ecr.eu-central-1.amazonaws.com/my_app:latest" '.taskDefinition | .containerDefinitions[0].image = $IMAGE' '''
+                sh ("aws ecs register-task-definition --family Final-Project --cli-input-json file://task-definitions.json --network-mode bridge --cpu 256 --memory 512"); 
+            }
+        }
+        stage ("Deploy") {
+            steps {
+                sh ("aws ecs update-service --cluster Final --service Final-project --task-definition Final-Project"); 
+            }
+        }
+    }
+}
