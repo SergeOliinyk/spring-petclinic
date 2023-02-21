@@ -20,9 +20,15 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage ('Build .jar file') {
             steps {
-                sh "mvn spring-boot:build-image"
+                sh './mvnw package'
+            }
+        }
+
+        stage('Build Docker') {
+            steps {
+                sh "docker build -t spring/petclinic ."
             }
         }
         stage('Push to ECR') {
