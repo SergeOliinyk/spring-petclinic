@@ -2,7 +2,7 @@ FROM anapsix/alpine-java
 
 LABEL maintainer="shanem@liatrio.com"
 
-ARG JAR=spring-petclinic-2.7.0-SNAPSHOT.jar
+ARG JAR=spring-petclinic-*.jar
 
 COPY target/$JAR /home/.jar
 

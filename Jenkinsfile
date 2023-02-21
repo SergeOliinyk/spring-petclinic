@@ -28,7 +28,7 @@ pipeline {
 
         stage('Build Docker') {
             steps {
-                sh "docker build -t spring/petclinic ."
+                sh "docker build -t spring-petclinic:latest ."
             }
         }
         stage('Push to ECR') {
