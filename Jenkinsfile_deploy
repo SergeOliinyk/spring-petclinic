@@ -3,21 +3,19 @@ pipeline {
     options {
         timestamps()
     }
+    parameters {
+        string name: 'IMAGE', defaultValue: 'latest', description: 'image number from ECR'
+    }
     stages {
-        stage ("Get container definition") {
+        stage ("Get versions") {
             steps {
-                sh ("aws ecs describe-task-definition --task-definition Final-Project --query 'taskDefinition.{containerDefinitions:containerDefinitions}' > task-definitions.json "); 
-            }
-        }
-        stage ("Create task definition") {
-            steps {
-                sh '''cat task-definitions.json | jq --arg IMAGE "203299885394.dkr.ecr.eu-central-1.amazonaws.com/my_app:latest" '.taskDefinition | .containerDefinitions[0].image = $IMAGE' '''
-                sh ("aws ecs register-task-definition --family Final-Project --cli-input-json file://task-definitions.json --network-mode bridge --cpu 256 --memory 512"); 
+                sh ("ecs-deploy --version"); 
+                sh ("aws --version"); 
             }
         }
         stage ("Deploy") {
             steps {
-                sh ("aws ecs update-service --cluster Final --service Final-project --task-definition Final-Project"); 
+                sh ("ecs-deploy -c Final -n Final-project -i 203299885394.dkr.ecr.eu-central-1.amazonaws.com/my_app:${params.IMAGE}  --timeout 600"); 
             }
         }
     }
