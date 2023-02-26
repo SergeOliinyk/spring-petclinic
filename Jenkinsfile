@@ -34,7 +34,7 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 sh "aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${ERC}"
-                sh "docker tag docker.io/library/spring-petclinic:3.0.0-SNAPSHOT ${ERC}/my_app:latest"
+                sh "docker tag docker.io/library/spring-petclinic:3.0.0-SNAPSHOT ${ERC}/my_app:${env.BUILD_NUMBER}"
                 sh "docker push ${ERC}/my_app:latest"
 
             }
